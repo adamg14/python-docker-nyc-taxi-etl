@@ -1,0 +1,14 @@
+*** building the docker python image ***
+docker build -t python_docker .
+
+*** running the docker image ***
+docker run -it python_docker
+
+
+** running the pipeline script locally for time efficiency **
+python data_extraction.py https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz root root localhost 5432 new_york_taxi yellow_tripdata
+
+
+*** full execution flow ***
+docker-compose up -d
+python data_extraction.py https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz root root localhost 5432 new_york_taxi yellow_tripdata

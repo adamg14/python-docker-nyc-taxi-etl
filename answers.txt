@@ -1,0 +1,4 @@
+1. What is the version of pip?
+pip 24.3.1
+
+2. What is the hostname and port pgadmin should use to connect to the postgres database?
