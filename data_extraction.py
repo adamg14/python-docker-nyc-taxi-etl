@@ -74,25 +74,46 @@ def main(params):
 
     # Infer schema with proper datetime parsing
     print("Loading sample for schema inference...")
-    sample_df = pd.read_csv(
-        csv_file,
-        nrows=100,
-        low_memory=False,
-        parse_dates=["tpep_pickup_datetime", "tpep_dropoff_datetime"]
-    )
+    if 'green' in download_link:
+        sample_df = pd.read_csv(
+            csv_file,
+            nrows=100,
+            low_memory=False,
+            parse_dates=["lpep_pickup_datetime", "lpep_pickup_datetime"]
+        )
+    
+    else:
+        sample_df = pd.read_csv(
+            csv_file,
+            nrows=100,
+            low_memory=False,
+            parse_dates=["tpep_pickup_datetime", "tpep_pickup_datetime"]
+        )
     ddl = pd.io.sql.get_schema(sample_df, name=table_name)
     ddl = ddl.replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS')
     # Override datetime columns to TIMESTAMP
-    ddl = re.sub(
+    if 'green' in download_link:
+        ddl = re.sub(
+            r'"lpep_pickup_datetime" TEXT',
+            '"lpep_pickup_datetime" TIMESTAMP',
+            ddl
+        )
+        ddl = re.sub(
+            r'"lpep_pickup_datetime" TEXT',
+            '"lpep_pickup_datetime" TIMESTAMP',
+            ddl
+        )
+    else:
+        ddl = re.sub(
         r'"tpep_pickup_datetime" TEXT',
         '"tpep_pickup_datetime" TIMESTAMP',
         ddl
-    )
-    ddl = re.sub(
-        r'"tpep_dropoff_datetime" TEXT',
-        '"tpep_dropoff_datetime" TIMESTAMP',
-        ddl
-    )
+        )
+        ddl = re.sub(
+            r'"tpep_pickup_datetime" TEXT',
+            '"tpep_pickup_datetime" TIMESTAMP',
+            ddl
+        )
     print("Generated DDL:")
     print(ddl)
 
