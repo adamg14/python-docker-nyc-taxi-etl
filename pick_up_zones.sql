@@ -1,0 +1,1 @@
+-- Which were the top pickup locations with over 13,000 in total_amount (across all trips) for 2019-10-18?
